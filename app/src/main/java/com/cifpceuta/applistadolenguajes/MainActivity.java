@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -15,8 +17,9 @@ public class MainActivity extends AppCompatActivity {
     private ListView lvLenguajes;
     private Button btnAdd;
     private EditText etNewLenguaje;
-    private ArrayList<String> listaLenguajes;
-    private ArrayAdapter<String> adapterLenguajes;
+    private ArrayList<Lenguaje> listaLenguajes;
+    private MiAdapterLenguajes adapterLenguajes;
+    private ImageButton ibDeleteElement;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
         etNewLenguaje = findViewById(R.id.et_new_lenguaje);
 
         listaLenguajes = new ArrayList<>();
-        listaLenguajes.add("C++");
-        listaLenguajes.add("Python");
-        adapterLenguajes = new ArrayAdapter<>(this, R.layout.lenguaje_item,R.id.tv_lenguaje_lista,listaLenguajes);
+        listaLenguajes.add(new Lenguaje("C++", R.drawable.delete_24));
+        listaLenguajes.add(new Lenguaje("Python", R.drawable.delete_24));
+        adapterLenguajes = new MiAdapterLenguajes(this, listaLenguajes);
         lvLenguajes.setAdapter(adapterLenguajes);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -41,9 +44,8 @@ public class MainActivity extends AppCompatActivity {
     }
     public void addLenguaje(View v){
         if(!etNewLenguaje.getText().toString().isEmpty()){
-            listaLenguajes.add(etNewLenguaje.getText().toString());
+            listaLenguajes.add(new Lenguaje(etNewLenguaje.getText().toString(),R.drawable.delete_24));
             adapterLenguajes.notifyDataSetChanged();
-
         }
     }
 }
